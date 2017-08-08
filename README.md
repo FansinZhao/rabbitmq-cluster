@@ -10,22 +10,19 @@
 
 1 用作非集群节点,默认自动创建一个远程管理员用户.用户/密码: `admin/admin`
 
-    docker run --rm -d --hostname my-rabbit-cluster --name my-rabbit-cluster -e RABBITMQ_ERLANG_COOKIE='secret cookie here' rabbitmq-cluster
+    docker run --rm -d --hostname my-rabbit-cluster --name my-rabbit-cluster -e RABBITMQ_ERLANG_COOKIE='secret cookie here' fansin/rabbitmq-cluster
 
 如果需要自定义用户,只需要重写两个变量`RABBITMQ_REMOTE_USER`和`RABBITMQ_REMOTE_PASS`
-
-    docker run --rm -d --hostname my-rabbit-cluster --name my-rabbit-cluster -e RABBITMQ_ERLANG_COOKIE='secret cookie here' -e docker run --rm -d --hostname my-rabbit-cluster --name my-rabbit-cluster -e RABBITMQ_ERLANG_COOKIE='secret cookie here' rabbitmq-cluster
-=admin -e RABBITMQ_REMOTE_PASS=admin rabbitmq-cluster
-
-
+    
+    docker run --rm -d --hostname my-rabbit-cluster --name my-rabbit-cluster -e RABBITMQ_ERLANG_COOKIE='secret cookie here' -e RABBITMQ_REMOTE_USER=admin -e RABBITMQ_REMOTE_PASS=admin  fansin/rabbitmq-cluster
 
 2 用作集群节点,加入已创建节点集群中,,使用`--link my-rabbit-cluster`连接两个容器,JOIN_CLUSTER表示加入的集群节点.注意保证RABBITMQ_ERLANG_COOKIE一致.
 
-    docker run --rm -d --link my-rabbit-cluster --hostname my-rabbit-cluster-1 --name my-rabbit-cluster-1 -e RABBITMQ_ERLANG_COOKIE='secret cookie here' -e JOIN_CLUSTER=my-rabbit-cluster rabbitmq-cluster
+    docker run --rm -d --link my-rabbit-cluster --hostname my-rabbit-cluster-1 --name my-rabbit-cluster-1 -e RABBITMQ_ERLANG_COOKIE='secret cookie here' -e JOIN_CLUSTER=my-rabbit-cluster fansin/rabbitmq-cluster
 
 可以设置持久化类型,通过设置`-e CLUSTER_NODE_TYPE=ram`
 
-    docker run --rm -d --link my-rabbit-cluster --hostname my-rabbit-cluster-2 --name my-rabbit-cluster-2 -e RABBITMQ_ERLANG_COOKIE='secret cookie here' -e JOIN_CLUSTER=my-rabbit-cluster -e CLUSTER_NODE_TYPE=ram rabbitmq-cluster
+    docker run --rm -d --link my-rabbit-cluster --hostname my-rabbit-cluster-2 --name my-rabbit-cluster-2 -e RABBITMQ_ERLANG_COOKIE='secret cookie here' -e JOIN_CLUSTER=my-rabbit-cluster -e CLUSTER_NODE_TYPE=ram fansin/rabbitmq-cluster
 
 # 简单说明
 
