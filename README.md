@@ -2,6 +2,8 @@
 
 这个镜像根据官方rabbitmq镜像,经过简单的处理,可以实现直接进行集群,方便测试或演示使用.
 
+[Docker Hub 镜像](https://hub.docker.com/r/fansin/rabbitmq-cluster/) 
+
 基本使用方式可以完全参考[rabbitmq官方镜像](https://hub.docker.com/_/rabbitmq/)
 
 # 使用方式
