@@ -35,7 +35,9 @@
 
 
 # 已知异常
+
 1 由于rabbitmq-server需要先启动,才能添加用户,尽管做了重试设置,但仍有一定概率出现无法创建用户异常,请查看日志,保证有ip输出.
+
 2 rabbitmq-server 未发现日志配置选项,而官方镜像只做了stdout,所以为了查看日志,rabbitmq-server重启了一次.
 
 有疑问可以发issue或者直接联系我 171388204@qq.com
