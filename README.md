@@ -20,9 +20,9 @@
 
     docker run --rm -d --link my-rabbit-cluster --hostname my-rabbit-cluster-1 --name my-rabbit-cluster-1 -e RABBITMQ_ERLANG_COOKIE='secret cookie here' -e JOIN_CLUSTER=my-rabbit-cluster fansin/rabbitmq-cluster
 
-可以设置持久化类型,通过设置`-e CLUSTER_NODE_TYPE=ram`,注意这里需要添加其他的已加入集群连接`--link my-rabbit-cluster --link my-rabbit-cluster-1`,不然会卡在start_app,原因是其他已加入节点无法识别本节点
+3 添加持久化类型集群节点,通过设置`-e CLUSTER_NODE_TYPE=ram`,注意这里需要添加其他的已加入集群连接`--link my-rabbit-cluster --link my-rabbit-cluster-1`,不然会卡在start_app,原因是其他已加入节点无法识别本节点.
 
-    docker run --rm -d --link my-rabbit-cluster --link my-rabbit-cluster-1 --hostname my-rabbit-cluster-2 --name my-rabbit-cluster-2 -e RABBITMQ_ERLANG_COOKIE='secret cookie here' -e JOIN_CLUSTER=my-rabbit-cluster -e CLUSTER_NODE_TYPE=ram fansin/rabbitmq-cluster
+    docker run --rm -d --link my-rabbit-cluster --link my-rabbit-cluster-1 --hostname my-rabbit-cluster-2 --name my-rabbit-cluster-2 -e RABBITMQ_ERLANG_COOKIE='secret cookie here' -e JOIN_CLUSTER=my-rabbit-cluster -e CLUSTER_NODE_TYPE=ram fansin/rabbitmq-cluster
 
 # 简单说明
 
