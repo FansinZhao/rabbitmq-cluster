@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rabbitmq-plugins enable --offline rabbitmq_management
+
 if [ -e start_success ]
 then
     echo "已初始化,直接启动服务....."
