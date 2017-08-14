@@ -20,7 +20,7 @@ else
         if [ $retry_times == 0 ]
         then
             echo "retry_times=$retry_times"
-            echo "false" > start_success
+            touch start_failure
             continue
         fi
         let "retry_times--"
@@ -34,7 +34,7 @@ else
         
         if [ $? == 0 ]
         then
-            echo "true" > start_success
+            touch start_success
         else
             sleep 3s
             continue
@@ -64,14 +64,20 @@ else
             rabbitmqctl cluster_status
         fi
     done
-    #重启 可以优化,暂时没有找到方法
-    rabbitmqctl stop
-    sleep 3s
-    if [ $? == 0 ]
+    
+    if [ -e start_success ]
     then
-        rabbitmq-server
-    else
+        #重启 可以优化,暂时没有找到方法
+        rabbitmqctl stop
         sleep 3s
-        rabbitmq-server
-    fi
+        if [ $? == 0 ]
+        then
+            rabbitmq-server
+        else
+            sleep 3s
+            rabbitmq-server
+        fi
+     else
+       echo "初始化集群配置失败...请重新运行脚本尝试!" 
+     fi   
 fi
