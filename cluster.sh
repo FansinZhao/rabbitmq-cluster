@@ -2,10 +2,14 @@
 
 rabbitmq-plugins enable --offline rabbitmq_management
 
-if [ -e start_success ]
+if [ -e cluster_init_success ]
 then
     echo "已初始化,直接启动服务....."
     rabbitmq-server
+elif [ -e cluster_init_failure ]
+then
+    echo "初始化失败,请重新创建容器..."
+    exit -1
 else
     DEFAULT_USER="admin"
     DEFAULT_PASS="admin"
@@ -14,13 +18,14 @@ else
 
     retry_times=5
 
-    while [ ! -e start_success ]
+    while [ ! -e cluster_inited ]
     do
         echo "开始初始化集群配置...."
         if [ $retry_times == 0 ]
         then
             echo "retry_times=$retry_times"
-            touch start_failure
+            touch cluster_init_failure
+            touch cluster_inited
             continue
         fi
         let "retry_times--"
@@ -34,7 +39,8 @@ else
         
         if [ $? == 0 ]
         then
-            touch start_success
+            touch cluster_init_success
+            touch cluster_inited
         else
             sleep 3s
             continue
@@ -65,7 +71,7 @@ else
         fi
     done
     
-    if [ -e start_success ]
+    if [ -e cluster_init_success ]
     then
         #重启 可以优化,暂时没有找到方法
         rabbitmqctl stop
