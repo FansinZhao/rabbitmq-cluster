@@ -42,6 +42,7 @@ else
             touch cluster_init_success
             touch cluster_inited
         else
+            rabbitmqctl delete_user $RABBITMQ_REMOTE_USER
             sleep 3s
             continue
         fi   
