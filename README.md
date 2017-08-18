@@ -30,7 +30,7 @@
 
     docker cp rabbitmq.config cert/ my-rabbit-cluster:/etc/rabbitmq/rabbitmq.config
     docker restart my-rabbit-cluster
- 重启后,management的地址变为 https://ip:15672,rabbitmq的连接地址为ip:5671
+ 重启后,management的地址变为 https://ip:15671,rabbitmq的连接地址为ip:5671
 
     
 
